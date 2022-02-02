@@ -21,7 +21,7 @@ RUN mkdir  /catkinws/src && \
         git python-pip python-setuptools gcc libpq-dev \
         python-dev  python-pip python3-dev python3-pip python3-venv \
         python3-wheel python-rosdep python-rosinstall-generator \
-        python-wstool python-rosinstall python-catkin-tools python3-catkin-tools && \
+        python-wstool python-rosinstall && \
     rosdep init && rosdep update && \
         rosinstall_generator \
         controller_manager_msgs roscpp std_msgs controller_interface \
