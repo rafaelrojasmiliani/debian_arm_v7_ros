@@ -1,8 +1,8 @@
-name: deploy
+name: build_and_push_image
 on: push
 jobs:
-  deploy:
-    name: build image
+  build_and_push_image:
+    name: build and push docker image
     runs-on: ubuntu-latest
     steps:
       - name: checkout code

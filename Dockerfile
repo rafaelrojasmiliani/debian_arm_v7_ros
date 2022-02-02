@@ -33,3 +33,10 @@ RUN mkdir  /catkinws/src && \
         --rosdistro noetic --deps --wet-only --tar > ros.rosinstall && \
     wstool init -j8 src ros.rosinstall && \
     rosdep install -r -q  --from-paths src --ignore-src --rosdistro noetic -y
+RUN catkin config \
+     --install \
+        -DCMAKE_BUILD_TYPE=Release \
+        --install-space /opt/ros/noetic -j2 \
+        -DPYTHON_EXECUTABLE=/usr/bin/python3 \
+        -DCATKIN_SKIP_TESTING=ON
+RUN catkin build
