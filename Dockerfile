@@ -35,5 +35,5 @@ RUN mkdir  /catkinws/src && \
     wstool init -j8 src ros.rosinstall && \
     rosdep install -r -q  --from-paths src --ignore-src --rosdistro noetic -y
 
-RUN src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release -DCATKIN_SKIP_TESTING=ON --install-space /opt/ros/noetic -j1 -DPYTHON_EXECUTABLE=/usr/bin/python3
-        
+RUN src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release -DCATKIN_SKIP_TESTING=ON --install-space /opt/ros/noetic -j1 -DPYTHON_EXECUTABLE=/usr/bin/python3 && \
+    cd / && rm -rf /catkinws/*
