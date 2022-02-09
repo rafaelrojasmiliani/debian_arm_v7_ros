@@ -6,7 +6,7 @@ RUN mkdir  /catkinws/src && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends -o \
                         Dpkg::Options::="--force-confnew" \
-                        gnupg python3 python3-dev python3-pip build-essential \
+                        gnupg build-essential \
                         libyaml-cpp-dev lsb-release isc-dhcp-server && \
     sh -c """ \
     echo deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main \
@@ -19,9 +19,9 @@ RUN mkdir  /catkinws/src && \
         Dpkg::Options::="--force-confnew" \
         build-essential \
         git python-pip python-setuptools gcc libpq-dev \
-        python-dev  python-pip python3-dev python3-pip python3-venv \
+        python-dev  python-pip   \
         python3-wheel python-rosdep python-rosinstall-generator \
-        python-wstool python-rosinstall && \
+        python-wstool python-rosinstall python3-catkin-tools && \
     rosdep init && rosdep update && \
         rosinstall_generator \
         controller_manager_msgs roscpp std_msgs controller_interface \
@@ -36,5 +36,9 @@ RUN mkdir  /catkinws/src && \
     wstool init -j8 src ros.rosinstall && \
     rosdep install -r -q  --from-paths src --ignore-src --rosdistro noetic -y
 
-RUN src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release -DCATKIN_SKIP_TESTING=ON --install-space /opt/ros/noetic -j1 -DPYTHON_EXECUTABLE=/usr/bin/python3 && \
-    cd / && rm -rf /catkinws/*
+RUN catkin config \
+        --install \
+        -DCMAKE_BUILD_TYPE=Release \
+        --install-space /opt/ros/noetic -j2 \
+        -DPYTHON_EXECUTABLE=/usr/bin/python3 \
+        -DCATKIN_SKIP_TESTING=ON && catkin build
