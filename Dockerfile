@@ -1,4 +1,4 @@
-FROM --platform=linux/arm/v7 rafa606/debian_arm_v7
+FROM --platform=linux/arm/v7 rafa606/debian_arm_v7_2
 WORKDIR /catkinws
 ENV SSL_CERT_FILE=/usr/lib/ssl/certs/ca-certificates.crt
 SHELL ["/bin/bash", "-c"]
