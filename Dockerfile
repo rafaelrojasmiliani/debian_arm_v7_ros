@@ -7,7 +7,13 @@ RUN mkdir  /catkinws/src && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends -o \
                         Dpkg::Options::="--force-confnew" \
                         gnupg python3 python3-dev python3-pip build-essential \
-                        libyaml-cpp-dev lsb-release isc-dhcp-server && \
+                        libyaml-cpp-dev lsb-release isc-dhcp-server libnss-mdns \
+                        avahi-daemon \
+                        avahi-autoipd \
+                        openssh-server \
+                        isc-dhcp-client \
+                        iproute2 && \
+    rm -rf /var/lib/apt/lists/* && \
     sh -c """ \
     echo deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main \
         > /etc/apt/sources.list.d/ros-latest.list \
@@ -34,7 +40,7 @@ RUN mkdir  /catkinws/src && \
         joint_state_controller velocity_controllers force_torque_sensor_controller \
         --rosdistro noetic --deps --wet-only --tar > ros.rosinstall && \
     wstool init -j8 src ros.rosinstall && \
-    rosdep install -r -q  --from-paths src --ignore-src --rosdistro noetic -y
-
-RUN src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release -DCATKIN_SKIP_TESTING=ON --install-space /opt/ros/noetic -j1 -DPYTHON_EXECUTABLE=/usr/bin/python3 && \
+    rosdep install -r -q  --from-paths src --ignore-src --rosdistro noetic -y && \
+    rm -rf /var/lib/apt/lists/* && \
+    src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release -DCATKIN_SKIP_TESTING=ON --install-space /opt/ros/noetic -j1 -DPYTHON_EXECUTABLE=/usr/bin/python3 && \
     cd / && rm -rf /catkinws/*
