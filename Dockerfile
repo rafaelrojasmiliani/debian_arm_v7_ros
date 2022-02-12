@@ -12,6 +12,10 @@ RUN mkdir  /catkinws/src && \
                         avahi-autoipd \
                         openssh-server \
                         isc-dhcp-client \
+                        vim \
+                        screen \
+                        tmux \
+                        netcat \
                         iproute2 && \
     rm -rf /var/lib/apt/lists/* && \
     sh -c """ \
