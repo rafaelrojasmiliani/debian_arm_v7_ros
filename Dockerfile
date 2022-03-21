@@ -33,7 +33,7 @@ RUN mkdir  /catkinws/src && \
         python3-wheel python-rosdep python-rosinstall-generator \
         python-wstool python-rosinstall && \
     rosdep init && rosdep update && \
-        rosinstall_generator \
+    rosinstall_generator \
         controller_manager_msgs roscpp std_msgs controller_interface \
         hardware_interface joint_trajectory_controller pluginlib realtime_tools \
         actionlib_msgs message_generation actionlib control_msgs controller_manager \
